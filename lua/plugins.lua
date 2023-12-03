@@ -1,10 +1,29 @@
 -- Color scheme: tokyonight
+--local colorschema = {
+--	name = "folke/tokyonight.nvim",
+--	lazy = false,
+--	priority = 1000,
+--	config = function()
+--		vim.cmd("colorscheme tokyonight")
+--	end,
+--}
+
 local colorschema = {
-	name = "folke/tokyonight.nvim",
+	name = "catppuccin/nvim",
 	lazy = false,
 	priority = 1000,
 	config = function()
-		vim.cmd("colorscheme tokyonight")
+		require("catppuccin").setup({
+			flavour = "frappe",
+			integrations = {
+				mason = true,
+				noice = true,
+				lsp_trouble = true,
+				which_key = true,
+			}
+		})
+
+		vim.cmd("colorscheme catppuccin")
 	end,
 }
 
@@ -58,7 +77,18 @@ local ui = {
 	end,
 }
 
+-- Symbols
+
+local symbols = {
+	name = "simrat39/symbols-outline.nvim",
+	lazy = false,
+	init = function()
+		require("symbols-outline").setup()
+	end,
+}
+
 -- Mason LSP
+
 local mason_lsp = {
 	name = "williamboman/mason-lspconfig.nvim",
 	lazy = false,
@@ -143,7 +173,7 @@ local lualine = {
 	init = function()
 		require("lualine").setup({
 			options = {
-				theme = "tokyonight",
+				theme = "catppuccin",
 			},
 		})
 	end,
@@ -258,7 +288,53 @@ local completion = {
 	init = function()
 		local cmp = require("cmp")
 
+		local mapping = {
+			["<cr>"] = cmp.mapping(function(fallback)
+				if cmp.visible() then
+					cmp.confirm()
+				else
+					fallback()
+				end
+			end),
+			["<esc>"] = cmp.mapping(function(fallback)
+				if cmp.visible() then
+					cmp.abort()
+				else
+					fallback()
+				end
+			end),
+			["<tab>"] = cmp.mapping(function(fallback)
+				if cmp.visible() then
+					cmp.select_next_item()
+				else
+					fallback()
+				end
+			end),
+			["<s-tab>"] = cmp.mapping(function(fallback)
+				if cmp.visible() then
+					cmp.select_prev_item()
+				else
+					fallback()
+				end
+			end),
+			["<down>"] = cmp.mapping(function(fallback)
+				if cmp.visible_docs() then
+					cmp.scroll_docs(5)
+				else
+					fallback()
+				end
+			end),
+			["<up>"] = cmp.mapping(function(fallback)
+				if cmp.visible_docs() then
+					cmp.scroll_docs(-5)
+				else
+					fallback()
+				end
+			end),
+		}
+
 		cmp.setup({
+			mapping = mapping,
 			formatting = {
 				format = require("lspkind").cmp_format({
 					with_text = true,
@@ -360,17 +436,14 @@ local which_key = {
 	name = "folke/which-key.nvim",
 	lazy = false,
 	priority = 0,
-	init = function(keymap)
-		return function()
-			local wk = require("which-key")
-			wk.setup()
-			keymap()
-		end
+	init = function()
+		local wk = require("which-key")
+		wk.setup()
 	end,
 }
 
 return {
-	setup = function(keymap, ensure_installed_mason, ensure_installed_treesitter)
+	setup = function(ensure_installed_mason, ensure_installed_treesitter)
 		local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 		if not vim.loop.fs_stat(lazypath) then
 			vim.fn.system({
@@ -406,6 +479,11 @@ return {
 				lazy = ui.lazy,
 				dependencies = ui.dependencies,
 				init = ui.init,
+			},
+			{
+				symbols.name,
+				lazy = symbols.lazy,
+				init = symbols.init,
 			},
 			{
 				mason_lsp.name,
@@ -479,7 +557,7 @@ return {
 				which_key.name,
 				lazy = which_key.lazy,
 				priority = which_key.priority,
-				init = which_key.init(keymap),
+				init = which_key.init,
 			},
 		})
 	end,
