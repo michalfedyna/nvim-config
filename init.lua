@@ -47,6 +47,9 @@ set("n", "<leader>g", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
 -- File Tree
 set("n", "<leader>a", "<cmd>NvimTreeToggle<cr>", { desc = "Tree toogle" })
 
+-- Symbols
+set("n", "<leader>s", "<cmd>SymbolsOutline<cr>", { desc = "Outline toogle" })
+
 -- Format
 set("n", "<leader>z", "<cmd>Format<cr>", { desc = "Format file" })
 
@@ -56,23 +59,25 @@ set("n", "<leader><ctrl>z", "<cmd>ZenMode<cr>", { desc = "Zenmode toogle" })
 -- Search
 set("n", "<leader>x", "<cmd>noh<cr>", { desc = "Hide highlight" })
 
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-  callback = function(ev)
-    local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  end,
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+	callback = function(ev)
+		local opts = { buffer = ev.buf }
+		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+	end,
 })
 
 -- Language support
 local mason = {
 	"clangd",
+	"cmake",
 	"lua_ls",
 	"tsserver",
+	"html",
 }
 
 local treesitter = {
