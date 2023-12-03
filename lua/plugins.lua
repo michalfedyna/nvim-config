@@ -20,7 +20,7 @@ local colorschema = {
 				noice = true,
 				lsp_trouble = true,
 				which_key = true,
-			}
+			},
 		})
 
 		vim.cmd("colorscheme catppuccin")
@@ -84,6 +84,14 @@ local symbols = {
 	lazy = false,
 	init = function()
 		require("symbols-outline").setup()
+	end,
+}
+
+local autotag = {
+	name = "windwp/nvim-ts-autotag",
+	lazy = false,
+	init = function()
+		require("nvim-ts-autotag").setup()
 	end,
 }
 
@@ -484,6 +492,11 @@ return {
 				symbols.name,
 				lazy = symbols.lazy,
 				init = symbols.init,
+			},
+			{
+				autotag.name,
+				lazy = autotag.lazy,
+				init = autotag.init,
 			},
 			{
 				mason_lsp.name,

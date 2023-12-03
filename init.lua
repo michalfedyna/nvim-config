@@ -81,6 +81,7 @@ local treesitter = {
 	"cpp",
 	"lua",
 	"typescript",
+	"html",
 }
 
 -- Load plugins
