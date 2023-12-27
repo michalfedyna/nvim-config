@@ -18,8 +18,13 @@ vim.o.smartcase = true
 
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.o.smartindent = true
 
 local set = vim.keymap.set
+
+-- Utils
+set("n", "<leader>b", "$a;<esc>", { desc = "Add semicolon" })
 
 -- Windows
 set("n", "<leader>q", "<C-w>q", { desc = "Window quit" })
@@ -27,6 +32,11 @@ set("n", "<leader>l", "<C-w>l", { desc = "Window right" })
 set("n", "<leader>h", "<C-w>h", { desc = "Window left" })
 set("n", "<leader>k", "<C-w>k", { desc = "Window up" })
 set("n", "<leader>j", "<C-w>j", { desc = "Window down" })
+
+set("n", "<leader><leader>l", "<C-w>L", { desc = "Window move right" })
+set("n", "<leader><leader>h", "<C-w>H", { desc = "Window move left" })
+set("n", "<leader><leader>k", "<C-w>K", { desc = "Window move up" })
+set("n", "<leader><leader>j", "<C-w>J", { desc = "Window move down" })
 
 set("n", "<leader>o", "<cmd>vertical resize +10<cr>", { desc = "Resize" })
 set("n", "<leader>y", "<cmd>vertical resize -10<cr>", { desc = "Resize" })
@@ -40,7 +50,7 @@ set("n", "<leader>c", "<C-o>", { desc = "Jump back" })
 set("n", "<leader>v", "<C-i>", { desc = "Jump forward" })
 
 -- Telescope
-set("n", "<leader><leader>", "<cmd>Telescope buffers<cr>", { desc = "Show buffers" })
+set("n", "<leader>d", "<cmd>Telescope buffers<cr>", { desc = "Show buffers" })
 set("n", "<leader>f", "<cmd>Telescope find_files<cr>", { desc = "Find fils" })
 set("n", "<leader>g", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
 
@@ -54,7 +64,7 @@ set("n", "<leader>s", "<cmd>SymbolsOutline<cr>", { desc = "Outline toogle" })
 set("n", "<leader>z", "<cmd>Format<cr>", { desc = "Format file" })
 
 -- Zenmode
-set("n", "<leader><ctrl>z", "<cmd>ZenMode<cr>", { desc = "Zenmode toogle" })
+set("n", "<leader><leader>z", "<cmd>ZenMode<cr>", { desc = "Zenmode toogle" })
 
 -- Search
 set("n", "<leader>x", "<cmd>noh<cr>", { desc = "Hide highlight" })
@@ -84,9 +94,13 @@ local treesitter = {
 	"cmake",
 	"c",
 	"cpp",
+	"haskell",
+	"heex",
 	"lua",
 	"typescript",
 	"html",
+	"erlang",
+	"elixir",
 }
 
 -- Load plugins

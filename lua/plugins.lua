@@ -196,6 +196,30 @@ local dashboard = {
 	},
 }
 
+local elixir_formatter = function()
+	local util = require("formatter.util")
+	return {
+		exe = "mix format",
+		args = {
+			"--stdin-filename",
+			util.escape_path(util.get_current_buffer_file_path()),
+			"-",
+		},
+		stdin = true,
+	}
+end
+
+local haskell_formatter = function()
+	local util = require("formatter.util")
+	return {
+		exe = "fourmolu",
+		args = {
+			"-i",
+			util.escape_path(util.get_current_buffer_file_path()),
+		},
+	}
+end
+
 local lua_formatter = function()
 	local util = require("formatter.util")
 	return {
@@ -245,7 +269,16 @@ local formatter = {
 		require("formatter").setup({
 			filetype = {
 				c = {
-					c_formatter(),
+					c_formatter,
+				},
+				cpp = {
+					c_formatter,
+				},
+				elixir = {
+					elixir_formatter,
+				},
+				haskell = {
+					haskell_formatter,
 				},
 				lua = {
 					lua_formatter,
