@@ -1,100 +1,3 @@
--- Color scheme: tokyonight
---local colorschema = {
---	name = "folke/tokyonight.nvim",
---	lazy = false,
---	priority = 1000,
---	config = function()
---		vim.cmd("colorscheme tokyonight")
---	end,
---}
-
-local colorschema = {
-	name = "catppuccin/nvim",
-	lazy = false,
-	priority = 1000,
-	config = function()
-		require("catppuccin").setup({
-			flavour = "frappe",
-			integrations = {
-				mason = true,
-				noice = true,
-				lsp_trouble = true,
-				which_key = true,
-			},
-		})
-
-		vim.cmd("colorscheme catppuccin")
-	end,
-}
-
--- Icons
-local icons = {
-	name = "nvim-tree/nvim-web-devicons",
-	lazy = false,
-	priority = 1000,
-}
-
--- Blankline
-local blankline = {
-	name = "lukas-reineke/indent-blankline.nvim",
-	lazy = false,
-	init = function()
-		require("ibl").setup({
-			exclude = {
-				filetypes = {
-					"dashboard",
-				},
-			},
-		})
-	end,
-}
-
---UI
-local ui = {
-	name = "folke/noice.nvim",
-	lazy = false,
-	dependencies = {
-		"MunifTanjim/nui.nvim",
-		"rcarriga/nvim-notify",
-	},
-	init = function()
-		require("noice").setup({
-			lsp = {
-				override = {
-					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-					["vim.lsp.util.stylize_markdown"] = true,
-					["cmp.entry.get_documentation"] = true,
-				},
-			},
-			presets = {
-				bottom_search = true, -- use a classic bottom cmdline for search
-				command_palette = true, -- position the cmdline and popupmenu together
-				long_message_to_split = true, -- long messages will be sent to a split
-				inc_rename = false, -- enables an input dialog for inc-rename.nvim
-				lsp_doc_border = false, -- add a border to hover docs and signature help
-			},
-		})
-	end,
-}
-
--- Symbols
-
-local symbols = {
-	name = "simrat39/symbols-outline.nvim",
-	lazy = false,
-	init = function()
-		require("symbols-outline").setup()
-	end,
-}
-
-local autotag = {
-	name = "windwp/nvim-ts-autotag",
-	lazy = false,
-	init = function()
-		require("nvim-ts-autotag").setup()
-	end,
-}
-
 -- Mason LSP
 
 local mason_lsp = {
@@ -163,17 +66,6 @@ local treesitter = {
 	end,
 }
 
--- Telescope
-local telescope = {
-	name = "nvim-telescope/telescope.nvim",
-	lazy = false,
-	init = function()
-		local tel = require("telescope")
-		tel.setup({})
-		pcall(tel.load_extension, "fzf")
-	end,
-}
-
 -- LuaLine
 local lualine = {
 	name = "nvim-lualine/lualine.nvim",
@@ -195,6 +87,17 @@ local dashboard = {
 		"nvim-tree/nvim-web-devicons",
 	},
 }
+
+local go_formatter = function()
+	local util = require("formatter.util")
+	return {
+		exe = "gofmt",
+		args = {
+			util.escape_path(util.get_current_buffer_file_path()),
+		},
+		stdin = true,
+	}
+end
 
 local elixir_formatter = function()
 	local util = require("formatter.util")
@@ -276,6 +179,12 @@ local formatter = {
 				},
 				elixir = {
 					elixir_formatter,
+				},
+				heex = {
+					elixir_formatter,
+				},
+				go = {
+					go_formatter,
 				},
 				haskell = {
 					haskell_formatter,
@@ -432,17 +341,18 @@ local flash = {
 local zen = {
 	name = "folke/zen-mode.nvim",
 	lazy = false,
-}
-
--- Tree
-local tree = {
-	name = "nvim-tree/nvim-tree.lua",
-	lazy = false,
-	dependencies = {
-		"nvim-tree/nvim-web-devicons",
-	},
 	init = function()
-		require("nvim-tree").setup()
+		require("zen-mode").setup({
+			window = {
+				width = 0.7,
+			},
+			plugins = {
+				kitty = {
+					enabled = false,
+					font = "+4",
+				},
+			},
+		})
 	end,
 }
 
@@ -499,38 +409,15 @@ return {
 		vim.opt.rtp:prepend(lazypath)
 
 		require("lazy").setup({
-			{
-				colorschema.name,
-				priority = colorschema.priority,
-				lazy = colorschema.lazy,
-				config = colorschema.config,
-			},
-			{
-				icons.name,
-				priority = icons.priority,
-				lazy = icons.lazy,
-			},
-			{
-				blankline.name,
-				lazy = blankline.lazy,
-				init = blankline.init,
-			},
-			{
-				ui.name,
-				lazy = ui.lazy,
-				dependencies = ui.dependencies,
-				init = ui.init,
-			},
-			{
-				symbols.name,
-				lazy = symbols.lazy,
-				init = symbols.init,
-			},
-			{
-				autotag.name,
-				lazy = autotag.lazy,
-				init = autotag.init,
-			},
+			require("plugins.colorschema"),
+			require("plugins.icons"),
+			require("plugins.blankline"),
+			require("plugins.ui"),
+			require("plugins.symbols"),
+			require("plugins.autotag"),
+			require("plugins.telescope"),
+			require("plugins.focus"),
+			require("plugins.ufo"),
 			{
 				mason_lsp.name,
 				lazy = mason_lsp.lazy,
@@ -541,10 +428,6 @@ return {
 				treesitter.name,
 				lazy = treesitter.lazy,
 				init = treesitter.init(ensure_installed_treesitter),
-			},
-			{
-				telescope.name,
-				lazy = telescope.lazy,
 			},
 			{
 				lualine.name,
@@ -577,12 +460,7 @@ return {
 			{
 				zen.name,
 				lazy = zen.lazy,
-			},
-			{
-				tree.name,
-				lazy = tree.lazy,
-				dependencies = tree.dependencies,
-				init = tree.init,
+				init = zen.init,
 			},
 			{
 				comments.name,
