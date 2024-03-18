@@ -8,7 +8,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.wo.relativenumber = true
 vim.wo.number = true
 --vim.wo.signcolumn = "yes:1"
-vim.wo.signcolumn = "auto"
+--vim.wo.signcolumn = "no"
 vim.opt.termguicolors = true
 
 vim.o.timeout = true
@@ -27,6 +27,10 @@ vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+
+vim.diagnostic.config({
+	signs = false,
+})
 
 local set = vim.keymap.set
 

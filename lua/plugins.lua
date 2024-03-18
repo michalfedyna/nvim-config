@@ -373,15 +373,6 @@ local pairs = {
 	end,
 }
 
--- Diagnostic
-local diagnostic = {
-	name = "folke/trouble.nvim",
-	lazy = false,
-	dependencies = {
-		"nvim-tree/nvim-web-devicons",
-	},
-}
-
 -- Which key
 local which_key = {
 	name = "folke/which-key.nvim",
@@ -418,6 +409,8 @@ return {
 			require("plugins.telescope"),
 			require("plugins.focus"),
 			require("plugins.ufo"),
+			require("plugins.statuscol"),
+			require("plugins.trouble"),
 			{
 				mason_lsp.name,
 				lazy = mason_lsp.lazy,
@@ -471,11 +464,6 @@ return {
 				pairs.name,
 				lazy = pairs.lazy,
 				init = pairs.init,
-			},
-			{
-				diagnostic.name,
-				lazy = diagnostic.lazy,
-				dependencies = diagnostic.dependencies,
 			},
 			{
 				which_key.name,
