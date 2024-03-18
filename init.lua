@@ -7,8 +7,6 @@ vim.g.loaded_netrwPlugin = 1
 
 vim.wo.relativenumber = true
 vim.wo.number = true
---vim.wo.signcolumn = "yes:1"
---vim.wo.signcolumn = "no"
 vim.opt.termguicolors = true
 
 vim.o.timeout = true
@@ -45,6 +43,9 @@ end
 
 set("n", "zR", OpenAll, { desc = "Open Folds" })
 set("n", "zM", CloseAll, { desc = "Close Folds" })
+
+-- Oil
+set("n", "<leader>t", "<cmd>Oil --float<cr>", { desc = "Oil" })
 
 -- Flash
 function FlashJump()

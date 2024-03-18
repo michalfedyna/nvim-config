@@ -411,6 +411,7 @@ return {
 			require("plugins.ufo"),
 			require("plugins.statuscol"),
 			require("plugins.trouble"),
+			require("plugins.oil"),
 			{
 				mason_lsp.name,
 				lazy = mason_lsp.lazy,
