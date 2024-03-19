@@ -15,8 +15,8 @@ vim.o.timeoutlen = 300
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
 vim.o.expandtab = true
 vim.o.smartindent = true
 
@@ -29,6 +29,9 @@ vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 vim.diagnostic.config({
 	signs = false,
 })
+
+vim.g.mkdp_echo_preview_url = 1
+vim.g.mkdp_combine_preview = 1
 
 local set = vim.keymap.set
 
@@ -59,6 +62,9 @@ end
 function FlashTreesitterSearch()
 	require("flash").treesitter_search()
 end
+
+-- Markdown
+set("n", "<leader><leader>n", "<cmd>MarkdownPreview<cr>", { desc = "Markdown Preview" })
 
 set("n", "<leader>w", FlashJump, { desc = "Flash" })
 set("n", "<leader>e", FlashTreesitterSearch, { desc = "Flash Search" })
@@ -101,7 +107,7 @@ set("n", "<leader>g", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
 set("n", "<leader><leader>m", "<cmd>tabnew<cr>", { desc = "New Tab" })
 set("n", "<leader><leader>q", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 -- Symbols
-set("n", "<leader>s", "<cmd>SymbolsOutline<cr>", { desc = "Outline toogle" })
+set("n", "<leader>s", "<cmd>Lspsaga outline<cr>", { desc = "Outline toogle" })
 
 -- Format
 set("n", "<leader>z", "<cmd>Format<cr>", { desc = "Format file" })
@@ -115,7 +121,7 @@ set("n", "<leader>x", "<cmd>noh<cr>", { desc = "Hide highlight" })
 function Peek()
 	local winid = require("ufo").peekFoldedLinesUnderCursor()
 	if not winid then
-		vim.lsp.buf.hover()
+		vim.cmd("Lspsaga hover_doc")
 	end
 end
 
@@ -124,11 +130,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
 		local opts = { buffer = ev.buf }
 		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-		vim.keymap.set("n", "gs", vim.lsp.buf.type_definition, opts)
+		vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<cr>", opts)
+		vim.keymap.set("n", "gs", "<cmd>Lspsaga goto_type_definition<cr>", opts)
 		vim.keymap.set("n", "K", Peek, opts)
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+		vim.keymap.set("n", "<leader><leader>r", "<cmd>Lspsaga rename<cr>", opts)
 	end,
 })
 

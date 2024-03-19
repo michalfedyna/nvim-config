@@ -1,5 +1,4 @@
 -- Mason LSP
-
 local mason_lsp = {
 	name = "williamboman/mason-lspconfig.nvim",
 	lazy = false,
@@ -11,6 +10,7 @@ local mason_lsp = {
 					border = "single",
 				},
 			})
+			require("neodev").setup({})
 
 			local mas = require("mason-lspconfig")
 			mas.setup({
@@ -404,7 +404,6 @@ return {
 			require("plugins.icons"),
 			require("plugins.blankline"),
 			require("plugins.ui"),
-			require("plugins.symbols"),
 			require("plugins.autotag"),
 			require("plugins.telescope"),
 			require("plugins.focus"),
@@ -412,6 +411,8 @@ return {
 			require("plugins.statuscol"),
 			require("plugins.trouble"),
 			require("plugins.oil"),
+			require("plugins.markdown"),
+			require("plugins.lspsaga"),
 			{
 				mason_lsp.name,
 				lazy = mason_lsp.lazy,
