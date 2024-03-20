@@ -13,6 +13,9 @@ return {
 			outline = {
 				layout = "float",
 			},
+			symbol_in_winbar = {
+				enable = false,
+			},
 		})
 	end,
 }

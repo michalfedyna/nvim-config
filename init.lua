@@ -30,8 +30,10 @@ vim.diagnostic.config({
 	signs = false,
 })
 
+vim.g.mkdp_auto_close = 0
 vim.g.mkdp_echo_preview_url = 1
 vim.g.mkdp_combine_preview = 1
+vim.g.mkdp_combine_preview_auto_refresh = 1
 
 local set = vim.keymap.set
 
@@ -136,6 +138,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 		vim.keymap.set("n", "<leader><leader>r", "<cmd>Lspsaga rename<cr>", opts)
+		vim.keymap.set("n", "<leader><leader>a", "<cmd>Lspsaga code_action<cr>", opts)
 	end,
 })
 
@@ -149,6 +152,7 @@ local mason = {
 }
 
 local treesitter = {
+  "bash",
 	"cmake",
 	"c",
 	"cpp",

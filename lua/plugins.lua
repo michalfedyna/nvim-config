@@ -413,6 +413,9 @@ return {
 			require("plugins.oil"),
 			require("plugins.markdown"),
 			require("plugins.lspsaga"),
+			require("plugins.comment"),
+			require("plugins.todo"),
+			require("plugins.session"),
 			{
 				mason_lsp.name,
 				lazy = mason_lsp.lazy,
