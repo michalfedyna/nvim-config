@@ -88,133 +88,6 @@ local dashboard = {
 	},
 }
 
-local go_formatter = function()
-	local util = require("formatter.util")
-	return {
-		exe = "gofmt",
-		args = {
-			util.escape_path(util.get_current_buffer_file_path()),
-		},
-		stdin = true,
-	}
-end
-
-local elixir_formatter = function()
-	local util = require("formatter.util")
-	return {
-		exe = "mix format",
-		args = {
-			"--stdin-filename",
-			util.escape_path(util.get_current_buffer_file_path()),
-			"-",
-		},
-		stdin = true,
-	}
-end
-
-local haskell_formatter = function()
-	local util = require("formatter.util")
-	return {
-		exe = "fourmolu",
-		args = {
-			"-i",
-			util.escape_path(util.get_current_buffer_file_path()),
-		},
-	}
-end
-
-local lua_formatter = function()
-	local util = require("formatter.util")
-	return {
-		exe = "stylua",
-		args = {
-			"--search-parent-directories",
-			"--stdin-filepath",
-			util.escape_path(util.get_current_buffer_file_path()),
-			"--",
-			"-",
-		},
-		stdin = true,
-	}
-end
-
-local prettier_formatter = function()
-	local util = require("formatter.util")
-	return {
-		exe = "prettier",
-		args = {
-			"--stdin-filepath",
-			util.escape_path(util.get_current_buffer_file_path()),
-		},
-		stdin = true,
-		try_node_modules = true,
-	}
-end
-
-local c_formatter = function()
-	local util = require("formatter.util")
-	return {
-		exe = "clang-format",
-		args = {
-			"-assume-filename",
-			util.escape_path(util.get_current_buffer_file_name()),
-		},
-		stdin = true,
-		try_node_modules = true,
-	}
-end
-
--- Formatter
-local formatter = {
-	name = "mhartington/formatter.nvim",
-	lazy = false,
-	init = function()
-		require("formatter").setup({
-			filetype = {
-				c = {
-					c_formatter,
-				},
-				cpp = {
-					c_formatter,
-				},
-				elixir = {
-					elixir_formatter,
-				},
-				heex = {
-					elixir_formatter,
-				},
-				go = {
-					go_formatter,
-				},
-				haskell = {
-					haskell_formatter,
-				},
-				lua = {
-					lua_formatter,
-				},
-				javascript = {
-					prettier_formatter,
-				},
-				typescript = {
-					prettier_formatter,
-				},
-				["javascript.jsx"] = {
-					prettier_formatter,
-				},
-				["typescript.jsx"] = {
-					prettier_formatter,
-				},
-				javascriptreact = {
-					prettier_formatter,
-				},
-				typescriptreact = {
-					prettier_formatter,
-				},
-			},
-		})
-	end,
-}
-
 -- Linter
 local linter = {
 	name = "mfussenegger/nvim-lint",
@@ -281,6 +154,7 @@ local completion = {
 					fallback()
 				end
 			end),
+			["<C-Space>"] = cmp.mapping.complete(),
 		}
 
 		cmp.setup({
@@ -356,15 +230,6 @@ local zen = {
 	end,
 }
 
--- Comments
-local comments = {
-	name = "folke/todo-comments.nvim",
-	lazy = false,
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-	},
-}
-
 local pairs = {
 	name = "windwp/nvim-autopairs",
 	lazy = false,
@@ -416,6 +281,8 @@ return {
 			require("plugins.comment"),
 			require("plugins.todo"),
 			require("plugins.session"),
+			require("plugins.format"),
+			require("plugins.tree"),
 			{
 				mason_lsp.name,
 				lazy = mason_lsp.lazy,
@@ -437,11 +304,6 @@ return {
 				lazy = dashboard.lazy,
 			},
 			{
-				formatter.name,
-				lazy = formatter.lazy,
-				init = formatter.init,
-			},
-			{
 				linter.name,
 				lazy = linter.lazy,
 			},
@@ -459,11 +321,6 @@ return {
 				zen.name,
 				lazy = zen.lazy,
 				init = zen.init,
-			},
-			{
-				comments.name,
-				lazy = comments.lazy,
-				dependencies = comments.dependencies,
 			},
 			{
 				pairs.name,

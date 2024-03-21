@@ -108,11 +108,19 @@ set("n", "<leader>g", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
 -- Tabs
 set("n", "<leader><leader>m", "<cmd>tabnew<cr>", { desc = "New Tab" })
 set("n", "<leader><leader>q", "<cmd>tabclose<cr>", { desc = "Close Tab" })
+
 -- Symbols
 set("n", "<leader>s", "<cmd>Lspsaga outline<cr>", { desc = "Outline toogle" })
 
+-- Tree 
+set("n", "<leader><leader>d", "<cmd>NvimTreeToggle<cr>", { desc = "Tree" })
+
 -- Format
-set("n", "<leader>z", "<cmd>Format<cr>", { desc = "Format file" })
+function Format()
+	require("conform").format({ lsp_fallback = true, quiet = true })
+end
+
+set("n", "<leader>z", Format, { desc = "Format file" })
 
 -- Zenmode
 set("n", "<leader><leader>z", "<cmd>ZenMode<cr>", { desc = "Zenmode toogle" })
@@ -152,7 +160,7 @@ local mason = {
 }
 
 local treesitter = {
-  "bash",
+	"bash",
 	"cmake",
 	"c",
 	"cpp",
