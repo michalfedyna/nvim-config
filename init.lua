@@ -31,9 +31,9 @@ vim.diagnostic.config({
 })
 
 vim.g.mkdp_auto_close = 0
-vim.g.mkdp_echo_preview_url = 1
 vim.g.mkdp_combine_preview = 1
 vim.g.mkdp_combine_preview_auto_refresh = 1
+vim.g.mkdp_echo_preview_url = 1
 
 local set = vim.keymap.set
 
@@ -51,6 +51,13 @@ set("n", "zM", CloseAll, { desc = "Close Folds" })
 
 -- Oil
 set("n", "<leader>t", "<cmd>Oil --float<cr>", { desc = "Oil" })
+
+-- Sort
+set({ "n", "v" }, "<leader>ss", "<cmd>'<,'>Sort<cr>", { desc = "Sort" })
+set({ "n", "v" }, "<leader>sb", "viB<esc><cmd>'<,'>Sort<cr>", { desc = "Sort {} block" })
+set({ "n", "v" }, "<leader>sv", "vib<esc><cmd>'<,'>Sort<cr>", { desc = "Sort () block" })
+set({ "n", "v" }, "<leader>s\"", "vi\"<esc><cmd>'<,'>Sort<cr>", { desc = "Sort string" })
+set({ "n", "v" }, "<leader>s\'", "vi\'<esc><cmd>'<,'>Sort<cr>", { desc = "Sort string" })
 
 -- Flash
 function FlashJump()
@@ -109,15 +116,14 @@ set("n", "<leader>g", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
 set("n", "<leader><leader>m", "<cmd>tabnew<cr>", { desc = "New Tab" })
 set("n", "<leader><leader>q", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 
--- Symbols
-set("n", "<leader>s", "<cmd>Lspsaga outline<cr>", { desc = "Outline toogle" })
-
--- Tree 
+-- Tree
 set("n", "<leader><leader>d", "<cmd>NvimTreeToggle<cr>", { desc = "Tree" })
 
 -- Format
 function Format()
-	require("conform").format({ lsp_fallback = true, quiet = true })
+	require("conform").format({ lsp_fallback = true, quiet = true }, function(_, _)
+		vim.cmd("wa")
+	end)
 end
 
 set("n", "<leader>z", Format, { desc = "Format file" })
@@ -154,24 +160,24 @@ vim.api.nvim_create_autocmd("LspAttach", {
 local mason = {
 	"clangd",
 	"cmake",
+	"html",
 	"lua_ls",
 	"tsserver",
-	"html",
 }
 
 local treesitter = {
 	"bash",
-	"cmake",
 	"c",
+	"cmake",
 	"cpp",
+	"elixir",
+	"erlang",
+	"go",
 	"haskell",
 	"heex",
+	"html",
 	"lua",
 	"typescript",
-	"html",
-	"erlang",
-	"elixir",
-	"go",
 }
 
 -- Load plugins

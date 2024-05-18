@@ -218,7 +218,10 @@ local zen = {
 	init = function()
 		require("zen-mode").setup({
 			window = {
-				width = 0.7,
+				width = 0.6,
+				options = {
+					foldcolumn = "0",
+				},
 			},
 			plugins = {
 				kitty = {
@@ -283,6 +286,8 @@ return {
 			require("plugins.session"),
 			require("plugins.format"),
 			require("plugins.tree"),
+			require("plugins.save"),
+      require("plugins.sort"),
 			{
 				mason_lsp.name,
 				lazy = mason_lsp.lazy,
