@@ -14,7 +14,6 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
 			local hlGroup = chunk[2]
 			table.insert(newVirtText, { chunkText, hlGroup })
 			chunkWidth = vim.fn.strdisplaywidth(chunkText)
-			-- str width returned from truncate() may less than 2nd argument, need padding
 			if curWidth + chunkWidth < targetWidth then
 				suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
 			end
@@ -28,11 +27,10 @@ end
 
 return {
 	"kevinhwang91/nvim-ufo",
-	lazy = false,
 	dependencies = {
 		"kevinhwang91/promise-async",
 	},
-	init = function()
+	config = function()
 		require("ufo").setup({
 			provider_selector = function(bufnr, filetype, buftype)
 				return { "treesitter", "indent" }

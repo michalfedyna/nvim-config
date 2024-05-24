@@ -1,6 +1,6 @@
 return {
 	"luukvbaal/statuscol.nvim",
-	init = function()
+	config = function()
 		local builtin = require("statuscol.builtin")
 		require("statuscol").setup({
 			relculright = true,
