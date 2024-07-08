@@ -1,5 +1,6 @@
 local plugins = {
 	require("plugins.colorschema"),
+	require("plugins.comment"),
 	require("plugins.which"),
 	require("plugins.noice"),
 	require("plugins.treesitter"),
