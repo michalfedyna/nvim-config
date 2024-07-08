@@ -1,4 +1,4 @@
-local ensure_installed = { "clangd", "cmake", "html", "lua_ls", "tsserver" }
+local ensure_installed = { "clangd", "neocmake", "html", "lua_ls", "tsserver" }
 
 return {
 	"williamboman/mason.nvim",
