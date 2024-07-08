@@ -12,6 +12,7 @@ return {
 				typescript = { "prettier" },
 				["typescript.jsx"] = { "prettier" },
 				typescriptreact = { "prettier" },
+				astro = { "prettier" },
 				elixir = { "mix format" },
 				heex = { "mix format" },
 				sh = { "shfmt" },

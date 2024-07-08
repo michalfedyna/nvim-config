@@ -32,6 +32,13 @@ function OilCurrent()
   require("oil").open_float(require("oil").get_current_dir())
 end
 
+function Peek()
+  local winid = require("ufo").peekFoldedLinesUnderCursor()
+  if not winid then
+    vim.cmd("Lspsaga hover_doc")
+  end
+end
+
 return {
   setup = function()
     local set = vim.keymap.set
@@ -67,8 +74,8 @@ return {
     set("n", "<leader>c", "<C-o>", { desc = "Jump back" })
     set("n", "<leader>v", "<C-i>", { desc = "Jump forward" })
 
-    set("n", "<leader>a", OilRoot, { desc = "Show tree" })
-    set("n", "<leader>s", OilRoot, { desc = "Show tree" })
+    set("n", "<leader>a", OilRoot, { desc = "Root tree" })
+    set("n", "<leader>s", OilCurrent, { desc = "Current tree" })
     set("n", "<leader>b", "<cmd>Telescope buffers<cr>", { desc = "Show buffers" })
     set("n", "<leader>f", "<cmd>Telescope find_files<cr>", { desc = "Find fils" })
     set("n", "<leader>g", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
@@ -77,5 +84,20 @@ return {
     set("n", "<leader><leader>q", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 
     set("n", "<leader>x", "<cmd>noh<cr>", { desc = "Hide highlight" })
+
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+      callback = function(ev)
+        local opts = { buffer = ev.buf }
+        set("n", "gD", vim.lsp.buf.declaration, opts)
+        set("n", "gd", "<cmd>Lspsaga goto_definition<cr>", opts)
+        set("n", "gs", "<cmd>Lspsaga goto_type_definition<cr>", opts)
+        set("n", "K", Peek, opts)
+        set("n", "gi", vim.lsp.buf.implementation, opts)
+        set("n", "gr", vim.lsp.buf.references, opts)
+        set("n", "<leader><leader>r", "<cmd>Lspsaga rename<cr>", opts)
+        set("n", "<leader><leader>a", "<cmd>Lspsaga code_action<cr>", opts)
+      end,
+    })
   end,
 }
