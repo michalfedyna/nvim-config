@@ -10,6 +10,7 @@ local ensure_installed = {
 	"html",
 	"lua",
 	"typescript",
+  "tsx",
 }
 
 return {

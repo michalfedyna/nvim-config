@@ -74,8 +74,10 @@ return {
     set("n", "<leader>c", "<C-o>", { desc = "Jump back" })
     set("n", "<leader>v", "<C-i>", { desc = "Jump forward" })
 
-    set("n", "<leader>a", OilRoot, { desc = "Root tree" })
-    set("n", "<leader>s", OilCurrent, { desc = "Current tree" })
+    set("n", "<leader>aa", OilRoot, { desc = "Root tree" })
+    set("n", "<leader>as", OilCurrent, { desc = "Current tree" })
+    set("n", "<leader>ss", ":Telescope file_browser<CR>")
+    set("n", "<leader>sa", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
     set("n", "<leader>b", "<cmd>Telescope buffers<cr>", { desc = "Show buffers" })
     set("n", "<leader>f", "<cmd>Telescope find_files<cr>", { desc = "Find fils" })
     set("n", "<leader>g", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })

@@ -3,6 +3,9 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     require("oil").setup({
+      keymaps = {
+        ["<Esc>"] = "actions.close",
+      },
       float = {
         padding = 8
       },

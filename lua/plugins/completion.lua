@@ -6,9 +6,13 @@ return {
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "onsails/lspkind-nvim",
+    "hrsh7th/cmp-nvim-lsp-document-symbol",
+    "hrsh7th/cmp-nvim-lsp-signature-help",
+    "hrsh7th/cmp-vsnip",
   },
   config = function()
     local cmp = require("cmp")
+    local lspkind = require('lspkind')
 
     local mapping = {
       ["<cr>"] = cmp.mapping(function(fallback)
@@ -62,15 +66,23 @@ return {
         { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "path" },
+        { name = 'nvim_lsp_signature_help' },
+        { name = 'nvim_lsp_document_symbol' },
+        { name = 'vsnip' },
       },
       completion = {
         completeopt = "menu,menuone,noinsert",
       },
       window = {
-				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
-			},
-      mapping = mapping
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      },
+      mapping = mapping,
+      formatting = {
+        format = lspkind.cmp_format({
+          mode = "symbol",
+        }),
+      },
     })
   end
 }

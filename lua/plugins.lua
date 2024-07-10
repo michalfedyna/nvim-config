@@ -21,6 +21,7 @@ local plugins = {
   require("plugins.dashboard"),
   require("plugins.macro"),
   require("plugins.saga"),
+  require("plugins.tabs"),
 }
 
 return {
