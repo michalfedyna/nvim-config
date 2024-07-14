@@ -7,7 +7,8 @@ return {
         ["<Esc>"] = "actions.close",
       },
       float = {
-        padding = 8
+        padding = 8,
+        preview_split = "right",
       },
       view_options = {
         show_hidden = true,

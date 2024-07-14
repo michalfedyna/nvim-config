@@ -18,10 +18,11 @@ local plugins = {
   require("plugins.ufo"),
   require("plugins.statuscol"),
   require("plugins.session"),
-  require("plugins.dashboard"),
+  require("plugins.project"),
   require("plugins.macro"),
   require("plugins.saga"),
   require("plugins.tabs"),
+  require("plugins.zen"),
 }
 
 return {

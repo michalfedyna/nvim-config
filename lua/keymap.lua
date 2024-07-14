@@ -28,10 +28,6 @@ function OilRoot()
   require("oil").open_float()
 end
 
-function OilCurrent()
-  require("oil").open_float(require("oil").get_current_dir())
-end
-
 function Peek()
   local winid = require("ufo").peekFoldedLinesUnderCursor()
   if not winid then
@@ -74,10 +70,9 @@ return {
     set("n", "<leader>c", "<C-o>", { desc = "Jump back" })
     set("n", "<leader>v", "<C-i>", { desc = "Jump forward" })
 
-    set("n", "<leader>aa", OilRoot, { desc = "Root tree" })
-    set("n", "<leader>as", OilCurrent, { desc = "Current tree" })
-    set("n", "<leader>ss", ":Telescope file_browser<CR>")
-    set("n", "<leader>sa", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+    set("n", "<leader>a", OilRoot, { desc = "Oil tree" })
+    set("n", "<leader>ss", ":Telescope file_browser<CR>", { desc = "Root" })
+    set("n", "<leader>sa", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { desc = "Current" })
     set("n", "<leader>b", "<cmd>Telescope buffers<cr>", { desc = "Show buffers" })
     set("n", "<leader>f", "<cmd>Telescope find_files<cr>", { desc = "Find fils" })
     set("n", "<leader>g", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
@@ -87,6 +82,8 @@ return {
 
     set("n", "<leader>x", "<cmd>noh<cr>", { desc = "Hide highlight" })
 
+    set("n", "<leader><leader>z", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
+
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(ev)
@@ -95,8 +92,8 @@ return {
         set("n", "gd", "<cmd>Lspsaga goto_definition<cr>", opts)
         set("n", "gs", "<cmd>Lspsaga goto_type_definition<cr>", opts)
         set("n", "K", Peek, opts)
-        set("n", "gi", vim.lsp.buf.implementation, opts)
-        set("n", "gr", vim.lsp.buf.references, opts)
+        set("n", "gi", "<cmd>Telescope lsp_implementations<cr>", opts)
+        set("n", "gr", "<cmd>Telescope lsp_references<cr>", opts)
         set("n", "<leader><leader>r", "<cmd>Lspsaga rename<cr>", opts)
         set("n", "<leader><leader>a", "<cmd>Lspsaga code_action<cr>", opts)
       end,

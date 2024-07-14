@@ -12,7 +12,9 @@ return {
       },
       custom_highlights = function(colors)
         return {
-          FloatBorder = {bg = colors.base}
+          FloatBorder = { bg = colors.base },
+          NormalFloat = { bg = colors.base },
+          ZenBg = { bg = colors.base },
         }
       end
     })
