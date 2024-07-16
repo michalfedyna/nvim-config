@@ -82,6 +82,8 @@ return {
 
     set("n", "<leader>x", "<cmd>noh<cr>", { desc = "Hide highlight" })
 
+    set("n", "<leader>d", "<cmd>Trouble diagnostics toggle focus=true filter.buf=0<cr>", { desc = "Trouble" })
+
     set("n", "<leader><leader>z", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
 
     vim.api.nvim_create_autocmd("LspAttach", {

@@ -19,6 +19,7 @@ local plugins = {
   require("plugins.statuscol"),
   require("plugins.session"),
   require("plugins.project"),
+  require("plugins.trouble"),
   require("plugins.macro"),
   require("plugins.saga"),
   require("plugins.tabs"),
