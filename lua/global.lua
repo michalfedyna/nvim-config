@@ -7,6 +7,7 @@ return {
 		vim.wo.number = true
 
 		vim.opt.termguicolors = true
+    vim.opt.wrap = true
 
 		vim.o.timeout = true
 		vim.o.timeoutlen = 300

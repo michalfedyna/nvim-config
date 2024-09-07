@@ -18,6 +18,7 @@ return {
         heex = { "mix format" },
         sh = { "shfmt" },
         markdown = { "prettier" },
+        terraform = { "terraform fmt" },
       },
     })
   end,

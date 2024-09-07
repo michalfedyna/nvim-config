@@ -25,7 +25,7 @@ function FlashTreesitterSearch()
 end
 
 function OilRoot()
-  require("oil").open_float()
+  require("oil").open()
 end
 
 function Peek()
@@ -49,6 +49,7 @@ return {
     set("n", "<leader>r", FlashTreesitter, { desc = "Flash Treesitter" })
 
     set("n", "<leader>q", "<cmd>quit<cr>", { desc = "Window quit" })
+    set("n", "<leader><leader>w", "<cmd>wqa<cr>", { desc = "Quit" })
     set("n", "<leader>l", "<C-w>l", { desc = "Window right" })
     set("n", "<leader>h", "<C-w>h", { desc = "Window left" })
     set("n", "<leader>k", "<C-w>k", { desc = "Window up" })
