@@ -11,9 +11,10 @@ local ensure_installed = {
   "html",
   "lua",
   "vimdoc",
-				"luadoc",
-				"vim",
-				"markdown",
+  "luadoc",
+  "vim",
+  "markdown",
+  "dockerfile",
   "typescript",
   "tsx",
   "terraform"

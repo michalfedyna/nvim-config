@@ -19,6 +19,8 @@ return {
         sh = { "shfmt" },
         markdown = { "prettier" },
         terraform = { "terraform fmt" },
+        yaml = { "prettier" },
+        yml = { "prettier" }
       },
     })
   end,

@@ -38,6 +38,11 @@ return {
           require("lspconfig")[server_name].setup({
             capabilities = require('cmp_nvim_lsp').default_capabilities(),
           })
+        elseif server_name == "docker_compose_language_service" then
+          require("lspconfig")[server_name].setup({
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
+            filetypes = {"yaml.docker-compose"}
+          })
         else
           require("lspconfig")[server_name].setup({
             capabilities = require('cmp_nvim_lsp').default_capabilities()
