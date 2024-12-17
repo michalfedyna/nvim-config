@@ -38,6 +38,14 @@ end
 return {
   setup = function()
     local set = vim.keymap.set
+    local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
+
+    -- TODO
+
+    set('v', '<D-c>', '"+y') -- Copy
+    set('n', '<D-v>', '"+P') -- Paste normal mode
+    set('v', '<D-v>', '"+P') -- Paste visual mode
+    set('c', '<D-v>', '<C-R>+')
 
     set("n", "<leader>z", Format, { desc = "Format file" })
 
@@ -77,6 +85,8 @@ return {
     set("n", "<leader>b", "<cmd>Telescope buffers<cr>", { desc = "Show buffers" })
     set("n", "<leader>f", "<cmd>Telescope find_files<cr>", { desc = "Find fils" })
     set("n", "<leader>g", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
+    set("n", "<leader><leader>f", live_grep_args_shortcuts.grep_word_under_cursor, { desc = "Live grep under" })
+    set("v", "<leader><leader>f", live_grep_args_shortcuts.grep_visual_selection, { desc = "Live grep selected" })
 
     set("n", "<leader><leader>m", "<cmd>tabnew<cr>", { desc = "New Tab" })
     set("n", "<leader><leader>q", "<cmd>tabclose<cr>", { desc = "Close Tab" })
