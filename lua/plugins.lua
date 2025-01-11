@@ -24,6 +24,7 @@ local plugins = {
   require("plugins.saga"),
   require("plugins.tabs"),
   require("plugins.zen"),
+  require("plugins.tailwind"),
 }
 
 return {
