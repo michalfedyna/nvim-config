@@ -3,7 +3,6 @@ local ensure_installed = {
   "neocmake",
   "html",
   "lua_ls",
-  "tsserver",
   "eslint",
   "elixirls",
   "terraformls",

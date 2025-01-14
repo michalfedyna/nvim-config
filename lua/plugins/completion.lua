@@ -57,9 +57,8 @@ return {
           fallback()
         end
       end),
-      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<D-a>"] = cmp.mapping.complete(),
     }
-
 
     cmp.setup({
       sources = {
