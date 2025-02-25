@@ -25,7 +25,7 @@ function FlashTreesitterSearch()
 end
 
 function OilRoot()
-  require("oil").toggle_float()
+  require("oil").open()
 end
 
 function Peek()

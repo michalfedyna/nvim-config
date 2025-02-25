@@ -4,6 +4,8 @@ return {
   config = function()
     require("oil").setup({
       keymaps = {
+        ["<CR>"] = "actions.select",
+        ["<S-CR>"] = { "actions.select", opts = { vertical = true } },
         ["<Esc>"] = "actions.close",
         ["<D-j>"] = "actions.preview_scroll_down",
         ["<D-k>"] = "actions.preview_scroll_up",
