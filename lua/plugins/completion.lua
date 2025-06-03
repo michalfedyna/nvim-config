@@ -9,6 +9,7 @@ return {
     "hrsh7th/cmp-nvim-lsp-document-symbol",
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-vsnip",
+    "MeanderingProgrammer/render-markdown.nvim",
   },
   config = function()
     local cmp = require("cmp")
@@ -82,6 +83,14 @@ return {
           mode = "symbol",
         }),
       },
+    })
+
+    cmp.setup.filetype('markdown', {
+      sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "buffer" },
+        { name = "path" },
+      })
     })
   end
 }

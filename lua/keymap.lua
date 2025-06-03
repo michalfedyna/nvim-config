@@ -97,6 +97,8 @@ return {
 
     set("n", "<leader><leader>z", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
 
+    set("n", "<leader><leader>x", "<cmd>RenderMarkdown toggle<cr>", { desc = "Markdown" })
+
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(ev)
