@@ -1,5 +1,4 @@
 local plugins = {
-  require("plugins.ai"),
   require("plugins.autopair"),
   require("plugins.autotag"),
   require("plugins.blankline"),
@@ -8,6 +7,7 @@ local plugins = {
   require("plugins.completion"),
   require("plugins.flash"),
   require("plugins.formater"),
+  require("plugins.lazydev"),
   require("plugins.lsp"),
   require("plugins.macro"),
   require("plugins.markdown"),
