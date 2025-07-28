@@ -28,6 +28,10 @@ function OilRoot()
   require("oil").open()
 end
 
+function Files()
+  require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
+end
+
 function Peek()
   local winid = require("ufo").peekFoldedLinesUnderCursor()
   if not winid then
@@ -79,7 +83,8 @@ return {
     set("n", "<leader>c", "<C-o>", { desc = "Jump back" })
     set("n", "<leader>v", "<C-i>", { desc = "Jump forward" })
 
-    set("n", "<leader>a", OilRoot, { desc = "Oil tree" })
+    -- set("n", "<leader>a", OilRoot, { desc = "Oil tree" })
+    set("n", "<leader>a", Files, { desc = "Files tree" })
     set("n", "<leader>ss", ":Telescope file_browser<CR>", { desc = "Root" })
     set("n", "<leader>sa", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { desc = "Current" })
     set("n", "<leader>b", "<cmd>Telescope buffers<cr>", { desc = "Show buffers" })
