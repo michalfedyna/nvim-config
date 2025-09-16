@@ -47,6 +47,14 @@ return {
 		set("v", "<D-v>", '"+P') -- Paste visual mode
 		set("c", "<D-v>", "<C-R>+")
 
+		set("n", "<C-j>", "<C-f>") -- Page down
+		set("n", "<C-k>", "<C-b>") -- Page up
+		set("n", "<C-l>", "<C-d>") -- 1/2 Page down
+		set("n", "<C-h>", "<C-u>") -- 1/2 Page up
+
+		set("n", "<leader><leader>s", ":<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>") -- split vertical with sync
+		set("n", "<leader><leader>d", ":<C-u>:set so=0 noscb<CR>") -- stop split vertical
+
 		set("n", "<leader>z", Format, { desc = "Format file" })
 
 		set("n", "zR", OpenAll, { desc = "Open Folds" })

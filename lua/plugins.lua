@@ -1,6 +1,7 @@
 local plugins = {
 	require("plugins.autopair"),
 	require("plugins.autotag"),
+  require("plugins.animate"),
 	require("plugins.blankline"),
 	require("plugins.colorschema"),
 	require("plugins.comment"),
@@ -13,7 +14,6 @@ local plugins = {
 	require("plugins.markdown"),
 	require("plugins.noice"),
 	require("plugins.overseer"),
-	require("plugins.parrot"),
 	require("plugins.project"),
 	require("plugins.saga"),
 	require("plugins.save"),
