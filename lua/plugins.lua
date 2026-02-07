@@ -5,7 +5,7 @@ local plugins = {
 	require("plugins.colorschema"),
 	require("plugins.comment"),
 	require("plugins.dap"),
-  require("plugins.git"),
+	require("plugins.diff"),
 	require("plugins.files"),
 	require("plugins.flash"),
 	require("plugins.formater"),

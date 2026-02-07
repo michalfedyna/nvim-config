@@ -40,14 +40,14 @@ local keymaps = {
 	-- TODO
 	{ "n", "<leader>p", "<cmd>DapToggleBreakpoint<cr>", desc = "Toggle Brakepoint" },
 
-	-- GIT
-	{ "n", "<leader><leader>g", "<cmd>Neogit<cr>", desc = "Neogit" },
+	-- Diff
+	{ "n", "<leader><leader>g", ":DiffviewOpen ", desc = "Diff" },
 
 	-- Clipboard
-	{ "v", "<D-c>", '"+y' },
-	{ "n", "<D-v>", '"+P' },
-	{ "v", "<D-v>", '"+P' },
-	{ "c", "<D-v>", "<C-R>+" },
+	{ { "n", "v" }, "y", '"+y' },
+	{ "n", "Y", '"+y$' },
+	{ { "n", "v" }, "p", '"+p' },
+	{ { "n", "v" }, "P", '"+P' },
 
 	-- Scrolling
 	{ "n", "<C-j>", "<C-f>" },
