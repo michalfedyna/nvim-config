@@ -5,13 +5,10 @@ return {
 		require("statuscol").setup({
 			relculright = true,
 			segments = {
-				--[[ {
-					text = { "%s" },
+				{
+					sign = { name = { "Dap" }, maxwidth = 1, auto = true },
 					click = "v:lua.ScSa",
-					sign = { maxwidth = 1, width = 1 },
-					condition = { true },
-					auto = false,
-				}, ]]
+				},
 				{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
 				{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
 				{ text = { " " } },

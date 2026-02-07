@@ -38,7 +38,25 @@ end
 ---@type Keymap[]
 local keymaps = {
 	-- TODO
-	{ "n", "<leader>p", "<cmd>DapToggleBreakpoint<cr>", desc = "Toggle Brakepoint" },
+	{ "n", "<leader>p", "<cmd>DapToggleBreakpoint<cr>", desc = "Toggle Breakpoint" },
+	{ "n", "<leader>tc", function() require("dap").continue() end, desc = "Debug: Continue" },
+	{ "n", "<leader>to", function() require("dap").step_over() end, desc = "Debug: Step Over" },
+	{ "n", "<leader>ti", function() require("dap").step_into() end, desc = "Debug: Step Into" },
+	{ "n", "<leader>tu", function() require("dap").step_out() end, desc = "Debug: Step Out" },
+	{ "n", "<leader>tr", function() require("dap").repl.open() end, desc = "Debug: REPL" },
+	{ "n", "<leader>tq", function() require("dap").terminate() end, desc = "Debug: Terminate" },
+	{ "n", "<leader>tt", function() require("dapui").toggle() end, desc = "Debug: Toggle UI" },
+	{ "n", "<leader>te", function() require("dapui").eval() end, desc = "Debug: Eval" },
+	{ "v", "<leader>te", function() require("dapui").eval() end, desc = "Debug: Eval Selection" },
+	{ "n", "<leader>tb", function() require("dap").set_breakpoint(vim.fn.input("Condition: ")) end, desc = "Debug: Conditional BP" },
+	{ "n", "<leader>tl", function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Log message: ")) end, desc = "Debug: Log Point" },
+	{ "n", "<leader>tp", function() require("dap").pause() end, desc = "Debug: Pause" },
+	{ "n", "<leader>td", function() require("dap").disconnect() end, desc = "Debug: Disconnect" },
+	{ "n", "<leader>tk", function() require("dap").up() end, desc = "Debug: Frame Up" },
+	{ "n", "<leader>tj", function() require("dap").down() end, desc = "Debug: Frame Down" },
+	{ "n", "<leader>tx", function() require("dap").clear_breakpoints() end, desc = "Debug: Clear All BP" },
+	{ "n", "<leader>ts", function() require("dap").run_to_cursor() end, desc = "Debug: Run to Cursor" },
+	{ "n", "<leader>tf", function() require("dapui").float_element() end, desc = "Debug: Float Element" },
 
 	-- Diff
 	{ "n", "<leader><leader>g", ":DiffviewOpen ", desc = "Diff" },
