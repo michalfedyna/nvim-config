@@ -41,6 +41,10 @@ return {
 		local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
 
 		-- TODO
+		set("n", "<leader>p", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle Brakepoint" })
+
+		-- GIT
+		set("n", "<leader><leader>g", "<cmd>Neogit<cr>", { desc = "Neogit" })
 
 		set("v", "<D-c>", '"+y') -- Copy
 		set("n", "<D-v>", '"+P') -- Paste normal mode
