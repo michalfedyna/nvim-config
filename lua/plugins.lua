@@ -4,7 +4,6 @@ local plugins = {
 	require("plugins.blankline"),
 	require("plugins.colorschema"),
 	require("plugins.comment"),
-  require("plugins.copilot"),
 	require("plugins.dap"),
   require("plugins.git"),
 	require("plugins.files"),

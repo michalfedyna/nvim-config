@@ -78,13 +78,14 @@ return {
 				completeopt = "menu,menuone,noinsert",
 			},
 			window = {
-				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
+				completion = cmp.config.window.bordered({ border = "rounded" }),
+				documentation = cmp.config.window.bordered({ border = "rounded" }),
 			},
 			mapping = mapping,
 			formatting = {
 				format = lspkind.cmp_format({
-					mode = "symbol",
+					mode = "symbol_text",
+					preset = "codicons",
 				}),
 			},
 		})
