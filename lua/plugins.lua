@@ -23,6 +23,7 @@ local plugins = {
 	require("plugins.statusline"),
 	require("plugins.tabs"),
 	require("plugins.telescope"),
+	require("plugins.test"),
 	require("plugins.treesitter"),
 	require("plugins.trouble"),
 	require("plugins.ufo"),

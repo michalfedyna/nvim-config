@@ -1,5 +1,5 @@
 local function Format()
-	require("conform").format({ lsp_fallback = true, quiet = true }, function(_, _)
+	require("conform").format({ lsp_format = "fallback", quiet = true }, function(_, _)
 		vim.cmd("wa")
 	end)
 end
@@ -57,6 +57,15 @@ local keymaps = {
 	{ "n", "<leader>tx", function() require("dap").clear_breakpoints() end, desc = "Debug: Clear All BP" },
 	{ "n", "<leader>ts", function() require("dap").run_to_cursor() end, desc = "Debug: Run to Cursor" },
 	{ "n", "<leader>tf", function() require("dapui").float_element() end, desc = "Debug: Float Element" },
+
+	-- Tests
+	{ "n", "<leader>tn", function() require("neotest").run.run() end, desc = "Test: Run Nearest" },
+	{ "n", "<leader>tF", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Test: Run File" },
+	{ "n", "<leader>tA", function() require("neotest").run.run(vim.uv.cwd()) end, desc = "Test: Run All" },
+	{ "n", "<leader>tL", function() require("neotest").run.run_last() end, desc = "Test: Run Last" },
+	{ "n", "<leader>tO", function() require("neotest").output.open({ enter = true }) end, desc = "Test: Output" },
+	{ "n", "<leader>tS", function() require("neotest").summary.toggle() end, desc = "Test: Summary" },
+	{ "n", "<leader>tW", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, desc = "Test: Watch File" },
 
 	-- Diff
 	{ "n", "<leader><leader>g", ":DiffviewOpen ", desc = "Diff" },

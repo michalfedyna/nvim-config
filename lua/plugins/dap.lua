@@ -1,11 +1,16 @@
 return {
 	"rcarriga/nvim-dap-ui",
-	dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "theHamsta/nvim-dap-virtual-text" },
+	dependencies = {
+		"mfussenegger/nvim-dap",
+		"nvim-neotest/nvim-nio",
+		"theHamsta/nvim-dap-virtual-text",
+	},
 	config = function()
 		require("dapui").setup()
 		require("nvim-dap-virtual-text").setup({})
 
 		local dap, dapui = require("dap"), require("dapui")
+
 		dap.listeners.before.attach.dapui_config = function()
 			dapui.open()
 		end
@@ -19,6 +24,9 @@ return {
 			dapui.close()
 		end
 
+		local mason_root = vim.fs.joinpath(vim.fn.stdpath("data"), "mason")
+		local mason_bin = vim.fs.joinpath(mason_root, "bin")
+
 		dap.adapters["pwa-node"] = {
 			type = "server",
 			host = "localhost",
@@ -26,10 +34,22 @@ return {
 			executable = {
 				command = "node",
 				args = {
-					"/Users/fedyna/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+					vim.fs.joinpath(mason_root, "packages", "js-debug-adapter", "js-debug", "src", "dapDebugServer.js"),
 					"${port}",
 				},
 			},
+		}
+
+
+		dap.adapters.mix_task = {
+			type = "executable",
+			command = vim.fs.joinpath(mason_bin, "elixir-ls-debugger"),
+			args = {},
+		}
+		dap.adapters.erlang_edb = {
+			type = "executable",
+			command = vim.fs.joinpath(mason_bin, "edb"),
+			args = { "dap" },
 		}
 
 		vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError", linehl = "", numhl = "" })
@@ -48,7 +68,7 @@ return {
 			type = "server",
 			port = "${port}",
 			executable = {
-				command = "/Users/fedyna/.local/share/nvim/mason/packages/codelldb/extension/adapter/codelldb",
+				command = vim.fs.joinpath(mason_root, "packages", "codelldb", "extension", "adapter", "codelldb"),
 				args = { "--port", "${port}" },
 			},
 		}
@@ -133,5 +153,83 @@ return {
 		for _, ft in ipairs({ "javascript", "typescript", "javascriptreact", "typescriptreact" }) do
 			dap.configurations[ft] = js_based_configs
 		end
+
+		dap.configurations.elixir = {
+			{
+				type = "mix_task",
+				request = "launch",
+				name = "Elixir: mix test",
+				task = "test",
+				taskArgs = { "--trace" },
+				startApps = true,
+				projectDir = "${workspaceFolder}",
+				requireFiles = {
+					"test/**/test_helper.exs",
+					"test/**/*_test.exs",
+				},
+			},
+			{
+				type = "mix_task",
+				request = "launch",
+				name = "Elixir: phx.server",
+				task = "phx.server",
+				projectDir = "${workspaceFolder}",
+				debugAutoInterpretAllModules = false,
+				debugInterpretModulesPatterns = function()
+					local project = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+					local module = project:gsub("[-_](%w)", string.upper):gsub("^%l", string.upper)
+					local input = vim.fn.input("Phoenix module patterns: ", module .. "*, " .. module .. "Web*")
+					return vim.tbl_map(vim.trim, vim.split(input, ",", { plain = true, trimempty = true }))
+				end,
+				exitAfterTaskReturns = false,
+			},
+		}
+
+		dap.configurations.erlang = {
+			{
+				type = "erlang_edb",
+				request = "launch",
+				name = "Erlang: launch rebar3 shell",
+				runInTerminal = {
+					kind = "integrated",
+					title = "rebar3 shell",
+					cwd = "${workspaceFolder}",
+					args = {
+						"sh",
+						"-c",
+						'exec $0 "$@" --eval="$EDB_DAP_DEBUGGEE_INIT"',
+						"rebar3",
+						"as",
+						"test",
+						"shell",
+					},
+				},
+				config = {
+					nameDomain = "shortnames",
+					nodeInitCodeInEnvVar = "EDB_DAP_DEBUGGEE_INIT",
+					timeout = 300,
+				},
+			},
+			{
+				type = "erlang_edb",
+				request = "attach",
+				name = "Erlang: attach to node",
+				config = function()
+					local node = vim.fn.input("Erlang node: ", "devel@localhost")
+					if node == "" then
+						return dap.ABORT
+					end
+					local config = {
+						node = node,
+						cwd = vim.fn.getcwd(),
+					}
+					local cookie = vim.fn.inputsecret("Erlang cookie (optional): ")
+					if cookie ~= "" then
+						config.cookie = cookie
+					end
+					return config
+				end,
+			},
+		}
 	end,
 }
