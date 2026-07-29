@@ -5,6 +5,9 @@ return {
       formatters_by_ft = {
         c = { "clang-format" },
         cpp = { "clang-format" },
+        objc = { "clang-format" },
+        objcpp = { "clang-format" },
+        swift = { "swift" },
         lua = { "stylua" },
         javascript = { "prettier" },
         ["javascript.jsx"] = { "prettier" },
@@ -14,6 +17,9 @@ return {
         typescriptreact = { "prettier" },
         json = { "prettier" },
         astro = { "prettier" },
+        java = { "google-java-format" },
+        kotlin = { "ktlint" },
+        rust = { "rustfmt" },
         elixir = { "mix" },
         heex = { "mix" },
         erlang = { "erlfmt" },
@@ -22,6 +28,12 @@ return {
         terraform = { "terraform fmt" },
         yaml = { "prettier" },
         yml = { "prettier" }
+      },
+      formatters = {
+        ["clang-format"] = {
+          command = "xcrun",
+          prepend_args = { "clang-format" },
+        },
       },
     })
   end,

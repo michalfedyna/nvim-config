@@ -1,4 +1,5 @@
 local plugins = {
+	require("plugins.apple"),
 	require("plugins.autopair"),
 	require("plugins.autotag"),
 	require("plugins.blankline"),
@@ -10,7 +11,9 @@ local plugins = {
 	require("plugins.flash"),
 	require("plugins.formater"),
 	require("plugins.lazydev"),
+	require("plugins.leetcode"),
 	require("plugins.lsp"),
+	require("plugins.rust"),
 	require("plugins.macro"),
 	require("plugins.markdown"),
 	require("plugins.noice"),

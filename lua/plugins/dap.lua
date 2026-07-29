@@ -1,3 +1,26 @@
+local function kotlin_project_root()
+	local path = vim.api.nvim_buf_get_name(0)
+	return vim.fs.root(path, { "gradlew", "mvnw", "settings.gradle", "settings.gradle.kts" })
+		or vim.fs.root(path, { "build.gradle", "build.gradle.kts", "pom.xml" })
+		or vim.fs.root(path, { ".git" })
+		or vim.fn.getcwd()
+end
+
+local function kotlin_main_class()
+	local package_name
+	for _, line in ipairs(vim.api.nvim_buf_get_lines(0, 0, -1, false)) do
+		package_name = line:match("^%s*package%s+([%w_.]+)")
+		if package_name then
+			break
+		end
+	end
+
+	local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t:r") .. "Kt"
+	local inferred = package_name and (package_name .. "." .. filename) or filename
+	local main_class = vim.fn.input("Kotlin main class: ", inferred)
+	return main_class ~= "" and main_class or require("dap").ABORT
+end
+
 return {
 	"rcarriga/nvim-dap-ui",
 	dependencies = {
@@ -10,6 +33,7 @@ return {
 		require("nvim-dap-virtual-text").setup({})
 
 		local dap, dapui = require("dap"), require("dapui")
+		dap.defaults.kotlin.auto_continue_if_many_stopped = false
 
 		dap.listeners.before.attach.dapui_config = function()
 			dapui.open()
@@ -50,6 +74,10 @@ return {
 			type = "executable",
 			command = vim.fs.joinpath(mason_bin, "edb"),
 			args = { "dap" },
+		}
+		dap.adapters.kotlin = {
+			type = "executable",
+			command = vim.fs.joinpath(mason_bin, "kotlin-debug-adapter"),
 		}
 
 		vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError", linehl = "", numhl = "" })
@@ -153,6 +181,35 @@ return {
 		for _, ft in ipairs({ "javascript", "typescript", "javascriptreact", "typescriptreact" }) do
 			dap.configurations[ft] = js_based_configs
 		end
+
+		dap.configurations.java = {
+			{
+				type = "java",
+				request = "attach",
+				name = "Java: attach to localhost:5005",
+				hostName = "127.0.0.1",
+				port = 5005,
+			},
+		}
+
+		dap.configurations.kotlin = {
+			{
+				type = "kotlin",
+				request = "launch",
+				name = "Kotlin: launch main class",
+				mainClass = kotlin_main_class,
+				projectRoot = kotlin_project_root,
+			},
+			{
+				type = "kotlin",
+				request = "attach",
+				name = "Kotlin: attach to localhost:5005",
+				projectRoot = kotlin_project_root,
+				hostName = "127.0.0.1",
+				port = 5005,
+				timeout = 2000,
+			},
+		}
 
 		dap.configurations.elixir = {
 			{

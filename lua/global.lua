@@ -26,6 +26,17 @@ return {
 		vim.o.foldenable = true
 		vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
+		vim.api.nvim_create_autocmd("FileType", {
+			group = vim.api.nvim_create_augroup("UserJvmIndent", { clear = true }),
+			pattern = { "java", "kotlin" },
+			callback = function(event)
+				vim.bo[event.buf].tabstop = 4
+				vim.bo[event.buf].shiftwidth = 4
+				vim.bo[event.buf].softtabstop = 4
+				vim.bo[event.buf].expandtab = true
+			end,
+		})
+
 		vim.g.neovide_input_use_logo = 1
 	end,
 }

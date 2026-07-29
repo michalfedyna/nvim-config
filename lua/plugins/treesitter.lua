@@ -10,7 +10,12 @@ local ensure_installed = {
   "go",
   "heex",
   "html",
+  "java",
+  "kotlin",
   "lua",
+  "objc",
+  "rust",
+  "swift",
   "vimdoc",
   "luadoc",
   "vim",
@@ -29,6 +34,7 @@ return {
     local treesitter = require("nvim-treesitter")
 
     treesitter.setup()
+    vim.treesitter.language.register("objc", "objcpp")
     treesitter.install(ensure_installed)
 
     local filetypes = {}
