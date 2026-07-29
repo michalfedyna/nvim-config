@@ -1,13 +1,5 @@
 local mason_root = vim.fs.joinpath(vim.fn.stdpath("data"), "mason")
 
-local function java_bundles()
-	return vim.fn.glob(
-		vim.fs.joinpath(mason_root, "share", "java-debug-adapter", "com.microsoft.java.debug.plugin-*.jar"),
-		false,
-		true
-	)
-end
-
 local function java_root(path)
 	return vim.fs.root(path, { "mvnw", "gradlew", "settings.gradle", "settings.gradle.kts" })
 		or vim.fs.root(path, { "pom.xml", "build.gradle", "build.gradle.kts", "build.xml" })
@@ -45,7 +37,6 @@ local function start_jdtls(event, capabilities)
 		root_dir = root_dir,
 		capabilities = capabilities,
 		init_options = {
-			bundles = java_bundles(),
 			extendedClientCapabilities = require("jdtls.capabilities"),
 		},
 		settings = {
@@ -131,22 +122,15 @@ return {
 		require("mason-lspconfig").setup({
 			ensure_installed = ensure_installed,
 			automatic_enable = {
-				exclude = { "jdtls", "rust_analyzer" },
+				exclude = { "jdtls" },
 			},
 		})
 		vim.lsp.enable("sourcekit")
 
 		local registry = require("mason-registry")
 		local packages = {
-			"codelldb",
-			"edb",
 			"google-java-format",
-			"java-debug-adapter",
-			"js-debug-adapter",
-			"kotlin-debug-adapter",
 			"ktlint",
-			"xcbeautify",
-			"xcode-build-server",
 		}
 		for _, name in ipairs(packages) do
 			local found, mason_package = pcall(registry.get_package, name)
