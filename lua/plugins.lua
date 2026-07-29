@@ -14,7 +14,6 @@ local plugins = {
 	require("plugins.macro"),
 	require("plugins.markdown"),
 	require("plugins.noice"),
-	require("plugins.overseer"),
 	require("plugins.project"),
 	require("plugins.saga"),
 	require("plugins.save"),
