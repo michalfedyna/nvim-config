@@ -131,6 +131,8 @@ return {
 		local packages = {
 			"google-java-format",
 			"ktlint",
+			"xcbeautify",
+			"xcode-build-server",
 		}
 		for _, name in ipairs(packages) do
 			local found, mason_package = pcall(registry.get_package, name)

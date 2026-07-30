@@ -4,10 +4,12 @@
 
 Swift and Objective-C support uses the toolchain selected by `xcode-select` for
 SourceKit-LSP, `swift format`, and `clang-format`. It includes Treesitter
-highlighting, completion and navigation, and formatting.
+highlighting, completion and navigation, formatting, Xcode and SwiftPM builds,
+tests, and code coverage through `xcodebuild.nvim`.
 
-Install Xcode and select it as the active developer directory. The following
-commands should resolve successfully:
+Install Xcode and select it as the active developer directory. Mason installs
+`xcode-build-server` and `xcbeautify`; nvim-treesitter installs the Swift and
+Objective-C parsers. The following commands should resolve successfully:
 
 ```sh
 xcode-select -p
@@ -16,9 +18,15 @@ xcrun --find swift-format
 xcrun --find clang-format
 ```
 
-nvim-treesitter installs the Swift and Objective-C parsers. Swift packages are
-detected through `Package.swift`; Xcode projects need their normal SourceKit-LSP
-build-server configuration for complete project-aware results.
+Open Neovim from an Xcode project or workspace and run `:XcodebuildSetup` once.
+The wizard selects the project, scheme, and device and generates
+`buildServer.json` for project-aware SourceKit-LSP results. Use
+`:XcodebuildPicker` to access build, run, test, coverage, and project actions;
+the Xcode integration does not define keybindings. Run `:checkhealth xcodebuild`
+to diagnose the toolchain and project configuration.
+
+Swift packages are detected through `Package.swift`. DAP debugging and the
+optional `pymobiledevice3` integration are intentionally disabled.
 
 ## Rust prerequisites
 

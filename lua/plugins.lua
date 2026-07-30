@@ -1,4 +1,5 @@
 local plugins = {
+	require("plugins.apple"),
 	require("plugins.autopair"),
 	require("plugins.autotag"),
 	require("plugins.blankline"),
