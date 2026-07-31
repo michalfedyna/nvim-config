@@ -31,7 +31,7 @@ end
 function Peek()
 	local winid = require("ufo").peekFoldedLinesUnderCursor()
 	if not winid then
-		vim.cmd("Lspsaga hover_doc")
+		vim.lsp.buf.hover()
 	end
 end
 
@@ -143,13 +143,13 @@ local keymaps = {
 ---@type Keymap[]
 local lsp_keymaps = {
 	{ "n", "gD", vim.lsp.buf.declaration },
-	{ "n", "gd", "<cmd>Lspsaga goto_definition<cr>" },
-	{ "n", "gs", "<cmd>Lspsaga goto_type_definition<cr>" },
+	{ "n", "gd", vim.lsp.buf.definition },
+	{ "n", "gs", vim.lsp.buf.type_definition },
 	{ "n", "K", Peek },
 	{ "n", "gi", "<cmd>Telescope lsp_implementations<cr>" },
 	{ "n", "gr", "<cmd>Telescope lsp_references<cr>" },
-	{ "n", "<leader><leader>r", "<cmd>Lspsaga rename<cr>" },
-	{ "n", "<leader><leader>a", "<cmd>Lspsaga code_action<cr>" },
+	{ "n", "<leader><leader>r", vim.lsp.buf.rename },
+	{ "n", "<leader><leader>a", vim.lsp.buf.code_action },
 }
 
 ---@class Keymap

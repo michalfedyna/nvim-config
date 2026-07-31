@@ -8,6 +8,9 @@ return {
 
 		vim.opt.termguicolors = true
 		vim.opt.wrap = true
+		vim.opt.winborder = "single"
+		vim.opt.winblend = 0
+		vim.opt.pumblend = 0
 
 		vim.o.timeout = true
 		vim.o.timeoutlen = 300

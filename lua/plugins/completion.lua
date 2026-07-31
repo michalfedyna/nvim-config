@@ -1,101 +1,76 @@
 return {
-	"hrsh7th/nvim-cmp",
+	"saghen/blink.cmp",
+	branch = "main",
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-cmdline",
-		"onsails/lspkind-nvim",
-		"hrsh7th/cmp-nvim-lsp-document-symbol",
-		"hrsh7th/cmp-nvim-lsp-signature-help",
-		"hrsh7th/cmp-vsnip",
-		"MeanderingProgrammer/render-markdown.nvim",
+		"saghen/blink.lib",
 	},
-	config = function()
-		local cmp = require("cmp")
-		local lspkind = require("lspkind")
-
-		local mapping = {
-			["<cr>"] = cmp.mapping(function(fallback)
-				if cmp.visible() then
-					cmp.confirm()
-				else
-					fallback()
-				end
-			end),
-			["<esc>"] = cmp.mapping(function(fallback)
-				if cmp.visible() then
-					cmp.abort()
-				else
-					fallback()
-				end
-			end),
-			["<tab>"] = cmp.mapping(function(fallback)
-				if cmp.visible() then
-					cmp.select_next_item()
-				else
-					fallback()
-				end
-			end),
-			["<s-tab>"] = cmp.mapping(function(fallback)
-				if cmp.visible() then
-					cmp.select_prev_item()
-				else
-					fallback()
-				end
-			end),
-			["<down>"] = cmp.mapping(function(fallback)
-				if cmp.visible_docs() then
-					cmp.scroll_docs(5)
-				else
-					fallback()
-				end
-			end),
-			["<up>"] = cmp.mapping(function(fallback)
-				if cmp.visible_docs() then
-					cmp.scroll_docs(-5)
-				else
-					fallback()
-				end
-			end),
-			["<D-a>"] = cmp.mapping.complete(),
-		}
-
-		cmp.setup({
-			sources = {
-				{
-					name = "lazydev",
-					group_index = 0,
-				},
-				{ name = "nvim_lsp" },
-				{ name = "buffer" },
-				{ name = "path" },
-				{ name = "nvim_lsp_signature_help" },
-				{ name = "nvim_lsp_document_symbol" },
-				{ name = "vsnip" },
-			},
-			completion = {
-				completeopt = "menu,menuone,noinsert",
-			},
-			window = {
-				completion = cmp.config.window.bordered({ border = "rounded" }),
-				documentation = cmp.config.window.bordered({ border = "rounded" }),
-			},
-			mapping = mapping,
-			formatting = {
-				format = lspkind.cmp_format({
-					mode = "symbol_text",
-					preset = "codicons",
-				}),
-			},
-		})
-
-		cmp.setup.filetype("markdown", {
-			sources = cmp.config.sources({
-				{ name = "nvim_lsp" },
-				{ name = "buffer" },
-				{ name = "path" },
-			}),
-		})
+	build = function()
+		require("blink.cmp").build():pwait()
 	end,
+	opts = {
+		keymap = {
+			preset = "none",
+			["<CR>"] = { "accept", "fallback" },
+			["<Esc>"] = { "hide", "fallback" },
+			["<Tab>"] = { "select_next", "fallback" },
+			["<S-Tab>"] = { "select_prev", "fallback" },
+			["<Down>"] = {
+				function(cmp)
+					return cmp.scroll_documentation_down(5)
+				end,
+				"fallback",
+			},
+			["<Up>"] = {
+				function(cmp)
+					return cmp.scroll_documentation_up(5)
+				end,
+				"fallback",
+			},
+			["<D-a>"] = { "show" },
+		},
+		completion = {
+			list = {
+				selection = {
+					preselect = true,
+					auto_insert = false,
+				},
+			},
+			accept = {
+				auto_brackets = { enabled = false },
+			},
+			menu = {
+				draw = {
+					columns = {
+						{ "label", "label_description", gap = 1 },
+						{ "kind_icon", "kind", gap = 1 },
+					},
+				},
+			},
+			documentation = {
+				auto_show = true,
+			},
+		},
+		fuzzy = { implementation = "rust" },
+		signature = {
+			enabled = true,
+			window = {
+				show_documentation = true,
+			},
+		},
+		sources = {
+			default = { "lazydev", "lsp", "buffer", "path", "snippets" },
+			per_filetype = {
+				markdown = { "lsp", "buffer", "path" },
+			},
+			providers = {
+				lazydev = {
+					name = "LazyDev",
+					module = "lazydev.integrations.blink",
+					score_offset = 100,
+				},
+				lsp = { fallbacks = {} },
+				path = { fallbacks = {} },
+			},
+		},
+	},
 }

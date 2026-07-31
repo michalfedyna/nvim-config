@@ -32,6 +32,13 @@ return {
 	},
 	config = function()
 		require("ufo").setup({
+			preview = {
+				win_config = {
+					border = "single",
+					winblend = 0,
+					winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
+				},
+			},
 			provider_selector = function(bufnr, filetype, buftype)
 				return { "treesitter", "indent" }
 			end,

@@ -16,7 +16,6 @@ local plugins = {
 	require("plugins.markdown"),
 	require("plugins.noice"),
 	require("plugins.project"),
-	require("plugins.saga"),
 	require("plugins.save"),
 	require("plugins.session"),
 	require("plugins.statuscol"),

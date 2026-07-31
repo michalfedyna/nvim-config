@@ -69,13 +69,13 @@ return {
 	dependencies = {
 		"mason-org/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
-		"hrsh7th/cmp-nvim-lsp",
+		"saghen/blink.cmp",
 		"mfussenegger/nvim-jdtls",
 	},
 	config = function()
 		require("mason").setup()
 
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		local capabilities = require("blink.cmp").get_lsp_capabilities(nil, true)
 		vim.lsp.config("*", { capabilities = capabilities })
 
 		local sourcekit_root_dir = vim.lsp.config.sourcekit.root_dir
