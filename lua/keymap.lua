@@ -56,15 +56,6 @@ local keymaps = {
 	{ "n", "<C-l>", "<C-d>" },
 	{ "n", "<C-h>", "<C-u>" },
 
-	-- Sync vertical
-	{
-		"n",
-		"<leader><leader>s",
-		":<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>",
-		desc = "Sync vertical",
-	},
-	{ "n", "<leader><leader>d", ":<C-u>:set so=0 noscb<CR>", desc = "Stop sync" },
-
 	-- Format
 	{ "n", "<leader>z", Format, desc = "Format file" },
 
