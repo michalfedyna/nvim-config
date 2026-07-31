@@ -8,16 +8,9 @@ return {
     "AerialToggle",
   },
   keys = {
-    { "<leader>t", "<cmd>AerialToggle!<cr>", desc = "Symbols outline" },
+    { "<leader>ta", "<cmd>AerialToggle!<cr>", desc = "Symbols outline" },
     { "[s",        "<cmd>AerialPrev<cr>",    desc = "Previous symbol" },
     { "]s",        "<cmd>AerialNext<cr>",    desc = "Next symbol" },
-    {
-      "<leader><leader>d",
-      function()
-        require("telescope").extensions.aerial.aerial()
-      end,
-      desc = "Document symbols",
-    },
   },
   dependencies = {
     "nvim-treesitter/nvim-treesitter",

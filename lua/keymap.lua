@@ -37,9 +37,6 @@ end
 
 ---@type Keymap[]
 local keymaps = {
-	-- Diff
-	{ "n", "<leader><leader>g", ":DiffviewOpen ", desc = "Diff" },
-
 	-- Clipboard
 	{ { "n", "v" }, "y", '"+y' },
 	{ "n", "Y", '"+y$' },
@@ -83,14 +80,14 @@ local keymaps = {
 	{ "n", "<leader><leader>j", "<C-w>J", desc = "Window move down" },
 
 	-- Resize
-	{ "n", "<leader>o", "<cmd>vertical resize +5<cr>", desc = "Resize vertical +" },
-	{ "n", "<leader>y", "<cmd>vertical resize -5<cr>", desc = "Resize vertical -" },
-	{ "n", "<leader>i", "<cmd>resize +5<cr>", desc = "Resize horizontal +" },
-	{ "n", "<leader>u", "<cmd>resize -5<cr>", desc = "Resize horizontal -" },
+	{ "n", "<leader><leader>o", "<cmd>vertical resize +5<cr>", desc = "Resize vertical +" },
+	{ "n", "<leader><leader>y", "<cmd>vertical resize -5<cr>", desc = "Resize vertical -" },
+	{ "n", "<leader><leader>i", "<cmd>resize +5<cr>", desc = "Resize horizontal +" },
+	{ "n", "<leader><leader>u", "<cmd>resize -5<cr>", desc = "Resize horizontal -" },
 
 	-- Split
-	{ "n", "<leader>n", "<cmd>sp<cr>", desc = "Split horizontal" },
-	{ "n", "<leader>m", "<cmd>vs<cr>", desc = "Split vertical" },
+	{ "n", "<leader><leader>v", "<cmd>sp<cr>", desc = "Split horizontal" },
+	{ "n", "<leader><leader>b", "<cmd>vs<cr>", desc = "Split vertical" },
 
 	-- Jumplist
 	{ "n", "<leader>c", "<C-o>", desc = "Jump back" },
@@ -98,49 +95,53 @@ local keymaps = {
 
 	-- File navigation
 	{ "n", "<leader>a", Files, desc = "Files tree" },
-	{ "n", "<leader>ss", ":Telescope file_browser<CR>", desc = "Root" },
-	{ "n", "<leader>sa", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", desc = "Current" },
+	{ "n", "<leader>sr", ":Telescope file_browser<CR>", desc = "Browse root" },
+	{ "n", "<leader>sc", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", desc = "Browse current" },
 	{ "n", "<leader>b", "<cmd>Telescope buffers<cr>", desc = "Show buffers" },
-	{ "n", "<leader>f", "<cmd>Telescope find_files<cr>", desc = "Find fils" },
+	{ "n", "<leader>f", "<cmd>Telescope find_files<cr>", desc = "Find files" },
 	{ "n", "<leader>g", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
 	{
 		"n",
-		"<leader><leader>f",
+		"<leader>sw",
 		function()
 			require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
 		end,
-		desc = "Live grep under",
+		desc = "Grep word",
 	},
 	{
 		"v",
-		"<leader><leader>f",
+		"<leader>sv",
 		function()
 			require("telescope-live-grep-args.shortcuts").grep_visual_selection()
 		end,
-		desc = "Live grep selected",
+		desc = "Grep selection",
 	},
 
 	-- Tabs
 	{ "n", "<leader><leader>m", "<cmd>tabnew<cr>", desc = "New Tab" },
 	{ "n", "<leader><leader>q", "<cmd>tabclose<cr>", desc = "Close Tab" },
 
+	-- Toggles
+	{ "n", "<leader>td", ":DiffviewOpen ", desc = "Open Diffview" },
+	{ "n", "<leader>tz", "<cmd>ZenMode<cr>", desc = "Zen mode" },
+	{ "n", "<leader>tm", "<cmd>RenderMarkdown toggle<cr>", desc = "Markdown" },
+
 	-- Misc
 	{ "n", "<leader>x", "<cmd>noh<cr>", desc = "Hide highlight" },
 	{ "n", "<leader>d", "<cmd>Trouble diagnostics toggle focus=true filter.buf=0<cr>", desc = "Trouble" },
-	{ "n", "<leader><leader>z", "<cmd>ZenMode<cr>", desc = "Zen mode" },
-	{ "n", "<leader><leader>x", "<cmd>RenderMarkdown toggle<cr>", desc = "Markdown" },
 }
 
 ---@type Keymap[]
 local lsp_keymaps = {
-	{ "n", "gD", vim.lsp.buf.declaration },
-	{ "n", "gd", vim.lsp.buf.definition },
-	{ "n", "gs", vim.lsp.buf.type_definition },
-	{ "n", "K", Peek },
-	{ "n", "gi", "<cmd>Telescope lsp_implementations<cr>" },
-	{ "n", "gr", "<cmd>Telescope lsp_references<cr>" },
-	{ "n", "<leader><leader>r", vim.lsp.buf.rename },
-	{ "n", "<leader><leader>a", vim.lsp.buf.code_action },
+	{ "n", "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
+	{ "n", "gd", vim.lsp.buf.definition, desc = "Go to definition" },
+	{ "n", "K", Peek, desc = "Hover documentation" },
+	{ "n", "grt", vim.lsp.buf.type_definition, desc = "Go to type definition" },
+	{ "n", "gri", "<cmd>Telescope lsp_implementations<cr>", desc = "Go to implementations" },
+	{ "n", "grr", "<cmd>Telescope lsp_references<cr>", desc = "Go to references" },
+	{ "n", "grn", vim.lsp.buf.rename, desc = "Rename symbol" },
+	{ { "n", "v" }, "gra", vim.lsp.buf.code_action, desc = "Code action" },
+	{ "n", "gO", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Document symbols" },
 }
 
 ---@class Keymap
