@@ -128,7 +128,7 @@ local keymaps = {
 
 	-- Misc
 	{ "n", "<leader>x", "<cmd>noh<cr>", desc = "Hide highlight" },
-	{ "n", "<leader>d", "<cmd>Trouble diagnostics toggle focus=true filter.buf=0<cr>", desc = "Trouble" },
+	{ "n", "<leader>d", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Diagnostics" },
 }
 
 ---@type Keymap[]
@@ -136,7 +136,7 @@ local lsp_keymaps = {
 	{ "n", "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
 	{ "n", "gd", vim.lsp.buf.definition, desc = "Go to definition" },
 	{ "n", "K", Peek, desc = "Hover documentation" },
-	{ "n", "grt", vim.lsp.buf.type_definition, desc = "Go to type definition" },
+	{ "n", "grt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Go to type definition" },
 	{ "n", "gri", "<cmd>Telescope lsp_implementations<cr>", desc = "Go to implementations" },
 	{ "n", "grr", "<cmd>Telescope lsp_references<cr>", desc = "Go to references" },
 	{ "n", "grn", vim.lsp.buf.rename, desc = "Rename symbol" },

@@ -8,9 +8,17 @@ return {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	},
 	config = function()
+		local function open_with_trouble(prompt_bufnr)
+			require("trouble.sources.telescope").open(prompt_bufnr)
+		end
+
 		require("telescope").setup({
 			defaults = {
 				borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+				mappings = {
+					i = { ["<C-t>"] = open_with_trouble },
+					n = { ["<C-t>"] = open_with_trouble },
+				},
 			},
 			extensions = {
 				fzf = {
