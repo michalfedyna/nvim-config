@@ -122,13 +122,12 @@ local keymaps = {
 	{ "n", "<leader><leader>q", "<cmd>tabclose<cr>", desc = "Close Tab" },
 
 	-- Toggles
-	{ "n", "<leader>td", ":DiffviewOpen ", desc = "Open Diffview" },
+	{ "n", "<leader>tv", ":DiffviewOpen ", desc = "Open Diffview" },
 	{ "n", "<leader>tz", "<cmd>ZenMode<cr>", desc = "Zen mode" },
 	{ "n", "<leader>tm", "<cmd>RenderMarkdown toggle<cr>", desc = "Markdown" },
 
 	-- Misc
 	{ "n", "<leader>x", "<cmd>noh<cr>", desc = "Hide highlight" },
-	{ "n", "<leader>d", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Diagnostics" },
 }
 
 ---@type Keymap[]
@@ -157,7 +156,7 @@ local function apply(maps, extra_opts)
 	for _, map in ipairs(maps) do
 		local o = {}
 		if map.desc then
-			o.desc = map.desc
+			oesc = map.desc
 		end
 		if map.opts then
 			o = vim.tbl_extend("force", o, map.opts)

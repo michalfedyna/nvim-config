@@ -1,5 +1,4 @@
 local plugins = {
-	require("plugins.aerial"),
 	require("plugins.apple"),
 	require("plugins.autopair"),
 	require("plugins.autotag"),
