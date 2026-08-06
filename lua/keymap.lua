@@ -156,7 +156,7 @@ local function apply(maps, extra_opts)
 	for _, map in ipairs(maps) do
 		local o = {}
 		if map.desc then
-			oesc = map.desc
+			o.desc = map.desc
 		end
 		if map.opts then
 			o = vim.tbl_extend("force", o, map.opts)
